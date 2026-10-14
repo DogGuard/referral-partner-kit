@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Referral Partner Kit</title>
+<style>
+#gate{position:fixed;inset:0;background:#002F6C;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Outfit',Calibri,'Segoe UI',system-ui,sans-serif;padding:16px}
+#gate .card{background:#fff;border-radius:14px;padding:32px 30px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35);text-align:center}
+#gate img{width:220px;height:auto;margin-bottom:18px}
+#gate h1{margin:0 0 6px;font-size:20px;color:#002F6C}
+#gate p{margin:0 0 16px;color:#4B586A;font-size:14px}
+#gate input{width:100%;box-sizing:border-box;border:1px solid #D5DDE7;border-radius:8px;padding:11px 12px;font-size:16px;text-align:center;letter-spacing:.08em}
+#gate button{margin-top:10px;width:100%;background:#002F6C;color:#fff;border:0;border-radius:8px;padding:11px;font-size:15px;font-weight:600;cursor:pointer}
+#gate .err{color:#990F11;font-size:13px;min-height:18px;margin-top:8px}
+#gate .foot{margin-top:14px;font-size:11px;color:#7A8798;letter-spacing:.08em;text-transform:uppercase}
+body.locked>*:not(#gate){visibility:hidden}
+</style>
+</head>
+<body class="locked">
+<div id="gate"><form class="card" id="gateform">
+<img src="logo.png" alt="Dog Guard">
+<h1>Referral Partner Kit</h1>
+<p>Preview for the Dog Guard home office and web team. Enter the access code to continue.</p>
+<input id="gatecode" type="password" autocomplete="off" placeholder="Access code" autofocus>
+<button type="submit">Open the kit</button>
+<div class="err" id="gateerr"></div>
+<div class="foot">Draft · not for distribution</div>
+</form></div>
+<script>
+(function(){
+  var ACCESS_CODE = "LocalPro";   // change this to whatever you like
+  var ok=false; try{ ok = sessionStorage.getItem('dgkit-ok')==='1'; }catch(e){}
+  var g=document.getElementById('gate');
+  function unlock(){ g.remove(); document.body.classList.remove('locked'); window.dispatchEvent(new Event('resize')); }
+  if(ok){ unlock(); return; }
+  document.body.classList.add('locked');
+  document.getElementById('gateform').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var v=document.getElementById('gatecode').value.trim();
+    if(v.toLowerCase()===ACCESS_CODE.toLowerCase()){ try{ sessionStorage.setItem('dgkit-ok','1'); }catch(e){} unlock(); }
+    else { document.getElementById('gateerr').textContent='That code did not match. Try again.'; }
+  });
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --navy:#002F6C; --blue:#0057B7; --sky:#009CDE; --gold:#FFC72C; --green:#158A2A;
+  --bg:#EDF1F5; --panel:#FFFFFF; --panel-2:#F8FAFC; --line:#D5DDE7; --ink:#1F2A3A; --ink-2:#4B586A; --muted:#7A8798;
+  --tab-bg:#FFFFFF; --tab-on:#002F6C; --tab-on-ink:#FFFFFF; --focus:#009CDE;
+  --shadow:0 10px 30px rgba(0,47,108,.12);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1826; --panel:#172336; --panel-2:#1D2B41; --line:#2C3C55; --ink:#E9EEF5; --ink-2:#B7C3D3; --muted:#8393A8;
+    --tab-bg:#172336; --tab-on:#FFC72C; --tab-on-ink:#0F1826; --shadow:0 12px 34px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1826; --panel:#172336; --panel-2:#1D2B41; --line:#2C3C55; --ink:#E9EEF5; --ink-2:#B7C3D3; --muted:#8393A8;
+  --tab-bg:#172336; --tab-on:#FFC72C; --tab-on-ink:#0F1826; --shadow:0 12px 34px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Outfit',Calibri,'Segoe UI',system-ui,sans-serif;font-size:15px;line-height:1.45}
+button,input,textarea{font:inherit}
+a{color:var(--sky)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+.app{max-width:1280px;margin:0 auto;padding-block:20px 60px;padding-inline:16px}
+.top{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.top img{height:54px;width:auto;border-radius:6px}
+.top h1{margin:0;font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.01em;text-wrap:balance}
+.top p{margin:2px 0 0;color:var(--ink-2)}
+.draft{margin-left:auto;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:5px 10px;border-radius:999px;font-weight:600}
+
+.layout{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+
+.setup{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;position:sticky;top:env(safe-area-inset-top,0px)}
+@media (max-width:900px){.setup{position:static}}
+.setup h2{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--ink)}
+.setup .hint{margin:0 0 14px;font-size:13px;color:var(--muted)}
+.setup h3{margin:16px 0 6px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;border-top:1px solid var(--line);padding-top:12px}
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:9px}
+.field label{font-size:12px;font-weight:600;color:var(--ink-2)}
+.field input{border:1px solid var(--line);border-radius:7px;padding:7px 9px;background:var(--panel-2);color:var(--ink);width:100%}
+.field input:focus{border-color:var(--sky)}
+.setup .reset{margin-top:10px;background:none;border:1px solid var(--line);color:var(--ink-2);border-radius:7px;padding:7px 10px;cursor:pointer;width:100%}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tab{background:var(--tab-bg);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:600}
+.tab[aria-selected="true"]{background:var(--tab-on);color:var(--tab-on-ink);border-color:var(--tab-on)}
+
+.piece{margin-bottom:34px}
+.piece-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.piece-head h2{margin:0;font-size:19px;font-weight:700}
+.piece-head .size{font-size:12px;color:var(--muted);letter-spacing:.04em}
+.piece-head .print{margin-left:auto;background:var(--navy);color:#fff;border:0;border-radius:7px;padding:7px 14px;cursor:pointer;font-weight:600}
+.piece-head .print:hover{background:var(--blue)}
+.piece-note{margin:0 0 12px;color:var(--ink-2);font-size:14px;max-width:70ch}
+.stages{display:flex;flex-wrap:wrap;gap:18px}
+.stage{position:relative;flex:1 1 320px;max-width:100%}
+.sheet{position:absolute;top:0;left:0;transform-origin:top left;background:#fff;color:#333;box-shadow:var(--shadow);overflow:hidden;font-family:'Outfit',Calibri,'Segoe UI',system-ui,sans-serif}
+.sheet *{color:inherit}
+.stage[data-w="816"][data-h="1056"]{aspect-ratio:816/1056}
+
+/* Paper sizes */
+.letter{width:816px;height:1056px}
+.postcard{width:576px;height:384px}
+.bizcard{width:336px;height:192px}
+.half{width:816px;height:528px}
+
+/* Shared print-piece styling (fixed light look: it is paper) */
+.navy{background:#002F6C;color:#fff}
+.gold-rule{height:4px;background:#FFC72C;border:0;margin:0}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.sheet h1,.sheet h2,.sheet h3{margin:0;line-height:1.1;text-wrap:balance}
+.sheet img{align-self:flex-start;object-fit:contain}
+.sheet p{margin:0}
+.qr{background:#fff;padding:6px;border-radius:6px;display:inline-block;line-height:0}
+.qr img,.qr canvas{display:block}
+
+/* Letter document chrome */
+.doc{display:flex;flex-direction:column}
+.doc .banner{background:#002F6C;padding:22px 48px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.doc .banner img{height:58px;width:auto}
+.doc .banner .tag{color:#fff;text-align:right;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.doc .body{padding:26px 48px 0;flex:1;display:flex;flex-direction:column;gap:14px}
+.doc .title{font-size:28px;font-weight:800;color:#002F6C;text-transform:uppercase;letter-spacing:.01em}
+.doc .sub{font-size:16px;color:#0057B7;font-weight:500;margin-top:4px}
+.doc h3{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#002F6C;border-bottom:2px solid #FFC72C;padding-bottom:5px;margin-bottom:8px;font-weight:700}
+.doc p,.doc li{font-size:13.5px;line-height:1.5;color:#333}
+.doc.dense .body{gap:11px;padding-top:20px}
+.doc.dense p,.doc.dense li{font-size:12.5px;line-height:1.42}
+.doc.dense .script{padding:9px 12px;font-size:12.5px}
+.doc.dense .qa{gap:8px}
+.doc.dense .title{font-size:27px}
+.doc.dense .pro-block{padding:12px 18px}
+.doc ul{margin:0;padding-left:18px}
+.doc .foot{margin-top:auto;border-top:1px solid #D5DDE7;padding:12px 48px 16px;display:flex;justify-content:space-between;font-size:11px;color:#7A8798}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step{background:#EBF2FA;border-radius:8px;padding:12px}
+.step b{display:block;color:#002F6C;font-size:22px;font-weight:800;line-height:1;margin-bottom:6px}
+.step p{font-size:12px;line-height:1.4}
+.qa{display:grid;gap:9px}
+.qa .q{font-weight:700;color:#002F6C;font-size:14px}
+.pro-block{display:flex;align-items:center;gap:18px;background:#002F6C;color:#fff;border-radius:10px;padding:16px 20px}
+.pro-block .name{font-size:18px;font-weight:700}
+.pro-block .meta{font-size:13px;opacity:.92}
+.pro-block .qr{margin-left:auto}
+.doc .pro-block p,.doc .pro-block .name,.doc .pro-block .meta,.doc .pro-block .eyebrow{color:#fff}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.why div{border-left:4px solid #FFC72C;padding:2px 0 2px 12px;font-size:13px;color:#333}
+.why b{display:block;color:#002F6C;font-size:14px}
+.script{background:#F8FAFC;border:1px solid #D5DDE7;border-radius:8px;padding:12px 14px;font-size:13px;color:#333;line-height:1.5}
+.script i{color:#0057B7}
+.internal{background:#FFC72C;color:#002F6C;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:5px 48px}
+table.tracker{width:100%;border-collapse:collapse;font-size:12px}
+table.tracker th{background:#002F6C;color:#fff;text-align:left;padding:7px 8px;font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+table.tracker td{border-bottom:1px solid #D5DDE7;padding:0 8px;height:30px;color:#333}
+table.tracker td.code{font-weight:700;color:#002F6C}
+.cad{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.cad div{background:#EBF2FA;border-radius:8px;padding:10px;font-size:12.5px;color:#333}
+.cad b{display:block;color:#002F6C;font-size:13px;margin-bottom:4px}
+.targets{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;text-align:center}
+.targets div{border:1px solid #D5DDE7;border-radius:8px;padding:10px 6px;font-size:12.5px;color:#333}
+.targets b{display:block;font-size:26px;color:#002F6C;font-weight:800;line-height:1}
+.check li{list-style:none;position:relative;padding-left:22px;margin-bottom:4px}
+.check li::before{content:"";position:absolute;left:0;top:4px;width:12px;height:12px;border:1.5px solid #002F6C;border-radius:3px}
+
+/* Postcard: leave-behind front */
+.lb-front{display:grid;grid-template-columns:1fr 150px;padding:26px 28px;gap:16px}
+.lb-front img{height:52px;width:auto;align-self:flex-start}
+.lb-front .tagline{font-size:26px;font-weight:700;line-height:1.15;margin-top:18px;max-width:11em}
+.lb-front .pro{margin-top:auto;padding-top:12px;border-top:3px solid #FFC72C;width:fit-content;min-width:60%}
+.lb-front .pro .eyebrow{opacity:.85}
+.lb-front .pro .name{font-size:18px;font-weight:700;margin-top:3px}
+.lb-front .pro .meta{font-size:13px;opacity:.92}
+.lb-front .side{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;text-align:center;font-size:12px}
+/* leave-behind back */
+.lb-back{padding:26px 30px;display:flex;flex-direction:column;gap:12px;color:#333}
+.lb-back h2{font-size:22px;color:#002F6C;font-weight:800}
+.lb-back .pts{display:grid;gap:8px;margin-top:4px}
+.lb-back .pts div{border-left:4px solid #FFC72C;padding-left:10px;font-size:13.5px;line-height:1.35}
+.lb-back .pts b{color:#002F6C}
+.lb-back .cta{margin-top:auto;background:#EBF2FA;border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px}
+.lb-back .cta b{color:#002F6C;font-size:15px}
+
+/* Business card: partner referral */
+.ref-card{display:grid;grid-template-columns:1fr 96px;padding:14px 16px;gap:10px;color:#333}
+.ref-card .eyebrow{color:#0057B7;font-size:9px}
+.ref-card .who{font-size:15px;font-weight:700;color:#002F6C;line-height:1.15;margin-top:3px}
+.ref-card .offer{font-size:10.5px;line-height:1.35;margin-top:6px}
+.ref-card .code{margin-top:auto;font-size:11px}
+.ref-card .code b{color:#002F6C;font-size:13px;letter-spacing:.06em}
+.ref-card .side{display:flex;flex-direction:column;align-items:center;justify-content:space-between}
+.ref-card .side img.logo{width:96px;height:auto;border-radius:3px}
+.ref-card .side .qr{padding:3px}
+
+/* Showing card */
+.show{display:grid;grid-template-rows:auto 1fr auto;padding:0}
+.show .head{background:#002F6C;color:#fff;padding:18px 28px 16px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.show .head h1{font-size:30px;font-weight:800}
+.show .head img{height:38px;width:auto}
+.show .mid{padding:14px 28px 0;display:grid;grid-template-columns:1fr 120px;gap:16px;color:#333}
+.show .mid p{font-size:12.5px;line-height:1.4}
+.show .mid .box{margin-top:10px;background:#EBF2FA;border-left:4px solid #FFC72C;padding:8px 10px;font-size:12px;line-height:1.35}
+.show .mid .box b{color:#002F6C}
+.show .mid .side{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:11px}
+.show .base{padding:8px 28px 12px;font-size:11px;color:#7A8798;display:flex;justify-content:space-between;gap:10px}
+
+/* Certificate */
+.cert{padding:18px;background:#002F6C}
+.cert .inner{background:#fff;height:100%;border:2px solid #FFC72C;padding:26px 34px;display:grid;grid-template-columns:1fr 140px;gap:20px;color:#333}
+.cert .eyebrow{color:#0057B7}
+.cert h1{font-size:36px;color:#002F6C;font-weight:800;margin-top:4px}
+.cert .from{font-size:15px;margin-top:8px}
+.cert .terms{font-size:15.5px;line-height:1.5;margin-top:18px;max-width:40em}
+.cert .terms b{color:#002F6C}
+.cert .amt{font-size:22px;font-weight:800;color:#002F6C}
+.cert .row{display:flex;gap:26px;margin-top:auto;padding-top:12px;font-size:12px;white-space:nowrap}
+.cert .row span{display:block;color:#7A8798;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.cert .fine{font-size:9.5px;color:#7A8798;line-height:1.35;margin-top:8px}
+.cert .side{display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;font-size:11px}
+.cert .side img{width:140px;height:auto;border-radius:4px}
+
+.notes{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px;max-width:78ch}
+.notes h2{margin:0 0 6px;font-size:18px}
+.notes h3{margin:18px 0 6px;font-size:14px;color:var(--ink)}
+.notes p,.notes li{color:var(--ink-2);font-size:14px}
+.notes ul{padding-left:20px;margin:0}
+.notes li{margin-bottom:5px}
+
+.tabbar{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.tabs{margin-bottom:0;align-items:center}
+.tabs-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;min-width:52px}
+.halfp{width:528px;height:816px}
+
+/* HOA welcome insert */
+.welcome{display:flex;flex-direction:column;color:#333}
+.welcome .head{background:#002F6C;color:#fff;padding:26px 30px 22px}
+.welcome .head .eyebrow{opacity:.85}
+.welcome .head h1{font-size:27px;font-weight:800;margin-top:6px}
+.welcome .mid{padding:24px 30px 0;display:flex;flex-direction:column;gap:14px}
+.welcome .mid p{font-size:14px;line-height:1.5}
+.welcome .pts{display:grid;gap:10px;margin-top:4px}
+.welcome .pts div{border-left:4px solid #FFC72C;padding-left:10px;font-size:13.5px;line-height:1.4}
+.welcome .pts b{color:#002F6C}
+.welcome .offer{margin:auto 30px 0;background:#EBF2FA;border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.welcome .offer .eyebrow{color:#0057B7;margin-bottom:3px}
+.welcome .offer p{font-size:12.5px;line-height:1.4}
+.welcome .offer b{color:#002F6C}
+.welcome .offer .qr{flex:none}
+.welcome .base{padding:14px 30px 18px;display:flex;align-items:center;gap:12px;font-size:10.5px;color:#7A8798}
+.welcome .base img{height:30px;width:auto;border-radius:3px}
+
+/* Developer option card */
+.option{display:flex;flex-direction:column;color:#333}
+.option .head{background:#002F6C;color:#fff;padding:18px 30px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.option .head .eyebrow{opacity:.85}
+.option .head h1{font-size:26px;font-weight:800;margin-top:3px}
+.option .head .sub{font-size:12.5px;opacity:.92;margin-top:4px}
+.option .head img{height:44px;width:auto}
+.option .mid{padding:22px 30px 0;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.option h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#002F6C;border-bottom:2px solid #FFC72C;padding-bottom:4px;margin-bottom:7px;font-weight:700}
+.option ul{margin:0;padding-left:16px}
+.option li{font-size:13px;line-height:1.45;margin-bottom:5px}
+.option .price{margin-top:10px;background:#EBF2FA;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.option .price b{font-size:16px;color:#002F6C}
+.option .base{margin-top:auto;padding:10px 30px 14px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#7A8798}
+
+/* Model home sign */
+.model-sign{padding:26px 30px;display:flex;flex-direction:column;gap:12px}
+.model-sign img{height:40px;width:auto;align-self:flex-start}
+.model-sign h1{font-size:34px;font-weight:800;margin-top:8px}
+.model-sign p{font-size:15px;line-height:1.5;opacity:.95;max-width:32em}
+.model-sign .row{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;font-size:12px;border-top:3px solid #FFC72C;padding-top:10px}
+
+/* Puppy checklist */
+.puppy{display:flex;flex-direction:column;color:#333}
+.puppy .head{padding:24px 30px 14px;border-bottom:4px solid #FFC72C}
+.puppy .head .eyebrow{color:#0057B7}
+.puppy .head h1{font-size:26px;font-weight:800;color:#002F6C;margin-top:4px}
+.puppy .list{list-style:none;margin:0;padding:18px 30px 0;display:grid;gap:11px}
+.puppy .list li{position:relative;padding-left:26px;font-size:13px;line-height:1.45}
+.puppy .list li::before{content:"";position:absolute;left:0;top:3px;width:14px;height:14px;border:1.5px solid #002F6C;border-radius:3px}
+.puppy .list b{color:#002F6C}
+.puppy .offer{margin:auto 30px 0;background:#EBF2FA;border-radius:8px;padding:10px 12px;display:flex;gap:12px;align-items:center}
+.puppy .offer p{font-size:12.5px;line-height:1.4}
+.puppy .offer b{color:#002F6C}
+.puppy .offer .qr{flex:none}
+.puppy .base{padding:12px 30px 16px;display:flex;align-items:center;gap:12px;font-size:10px;color:#7A8798}
+.puppy .base img{height:28px;width:auto;border-radius:3px}
+
+/* Groomer counter card */
+.counter{display:grid;grid-template-columns:1fr 150px;color:#333}
+.counter .left{padding:26px 26px 22px;display:flex;flex-direction:column;gap:9px}
+.counter .left .eyebrow{color:#0057B7}
+.counter .left h1{font-size:30px;font-weight:800;color:#002F6C}
+.counter .left p{font-size:12.5px;line-height:1.4}
+.counter .left .deal{margin-top:auto;background:#EBF2FA;border-left:4px solid #FFC72C;padding:8px 10px;font-size:12px}
+.counter .left .deal b{color:#002F6C}
+.counter .right{background:#002F6C;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 12px;text-align:center;font-size:11px}
+.counter .right img{width:120px;height:auto}
+
+/* Report card slip */
+.slip{display:grid;grid-template-columns:1fr 70px;padding:12px 14px;gap:8px;color:#333}
+.slip .eyebrow{color:#0057B7;font-size:8.5px}
+.slip .big{font-size:13px;font-weight:700;color:#002F6C;line-height:1.15;margin-top:3px}
+.slip .small{font-size:9px;line-height:1.35;margin-top:6px}
+.slip .small b{color:#002F6C}
+.slip .side{display:flex;flex-direction:column;align-items:center;justify-content:space-between}
+.slip .side img.logo{width:70px;height:auto;border-radius:3px}
+.slip .side .qr{padding:2px}
+
+/* Photography */
+.hero{height:170px;position:relative;overflow:hidden;flex:none}
+.sheet .hero img,.sheet .photo,.sheet .bg{width:100%;height:100%;object-fit:cover;display:block;align-self:auto;max-width:none}
+.doc.dense .hero{height:110px}
+.hero .cap{position:absolute;left:48px;bottom:14px;color:#fff;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+/* leave-behind front over photo */
+.lb-front .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:44% 45%}
+.lb-front .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,47,108,.97) 0%,rgba(0,47,108,.92) 42%,rgba(0,47,108,.35) 70%,rgba(0,47,108,.15) 100%)}
+.lb-front>*{position:relative}
+.lb-front .side{background:rgba(0,47,108,.8);border-radius:10px;padding:12px 8px 10px}
+/* showing card with photo */
+.show .mid{grid-template-columns:1fr 200px}
+.show .mid .side .photo{width:200px;height:132px;border-radius:8px;margin-bottom:8px}
+/* certificate photo column */
+.cert .inner{grid-template-columns:1fr 230px}
+.cert .side{position:relative;overflow:hidden;border-radius:6px;padding:14px 12px;justify-content:space-between}
+.cert .side .photo{position:absolute;inset:0;z-index:0;object-position:50% 50%}
+.cert .side::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,47,108,.75) 0%,rgba(0,47,108,0) 35%,rgba(0,47,108,0) 55%,rgba(0,47,108,.85) 100%);z-index:1}
+.cert .side>*{position:relative;z-index:2}
+.cert .side img.photo{width:100%;height:100%;border-radius:0}
+.cert .side img.logo{width:170px;height:auto;border-radius:0;position:relative;object-fit:contain}
+.cert .side p{color:#fff;font-size:11px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+/* welcome insert photo head */
+.welcome .head{position:relative;overflow:hidden;min-height:250px;display:flex;flex-direction:column;justify-content:flex-end}
+.welcome .head .photo{position:absolute;inset:0;z-index:0;object-position:50% 40%}
+.welcome .head::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,47,108,.05) 0%,rgba(0,47,108,.55) 55%,rgba(0,47,108,.92) 100%);z-index:1}
+.welcome .head>*{position:relative;z-index:2}
+/* model sign over photo */
+.model-sign{overflow:hidden}
+.model-sign .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:55% 40%}
+.model-sign .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,47,108,.55) 0%,rgba(0,47,108,.88) 60%,rgba(0,47,108,.97) 100%)}
+.model-sign>*{position:relative}
+/* option card photo strip */
+.option .strip{height:120px;overflow:hidden;flex:none}
+/* puppy insert photo band */
+.puppy .band{height:150px;overflow:hidden;flex:none}
+/* counter card with band */
+.counter{grid-template-columns:1fr 150px;grid-template-rows:140px 1fr}
+.counter .band{grid-column:1/3;overflow:hidden}
+.counter .left{padding:16px 24px 18px;gap:7px}
+.counter .left h1{font-size:24px}
+.counter .left p{font-size:11.5px}
+.counter .left .deal{font-size:11px;padding:7px 9px}
+.counter .right{padding:14px 10px}
+.counter .right img{width:110px}
+
+@media print{
+  body{background:#fff}
+  .app>*:not(.layout), .setup, .tabs, .piece-head, .piece-note, .notes{display:none !important}
+  .layout{display:block}
+  .piece{display:none;margin:0}
+  body[data-print] .piece[data-print-id]{display:none}
+  .piece.printing{display:block !important}
+  section[data-panel][hidden]{display:block !important}
+  .stages{display:block}
+  .stage{height:auto !important;max-width:none}
+  .sheet{position:static;transform:none !important;box-shadow:none;page-break-after:always;break-after:page}
+  .sheet:last-child{page-break-after:auto;break-after:auto}
+}
+</style>
+
+<div class="app">
+  <header class="top">
+    <img src="logo.png" alt="Dog Guard Out of Sight Fencing">
+    <div>
+      <h1>Referral Partner Kit</h1>
+      <p>Core pieces, the dealer playbook, and 5 partner inserts. Fill in the dealer details on the left and every piece updates.</p>
+    </div>
+    <span class="draft">Draft for review</span>
+  </header>
+
+  <div class="layout">
+    <aside class="setup" aria-label="Dealer setup">
+      <h2>Dealer setup</h2>
+      <p class="hint">Example values are shown. Replace them with a real Local Pro's details. Entries are kept on this device only.</p>
+
+      <div class="field"><label for="f-dealer">Dealership name</label><input id="f-dealer" data-key="dealer" value="Dog Guard of the Capital Region"></div>
+      <div class="field"><label for="f-owner">Local Pro (owner) name</label><input id="f-owner" data-key="owner" value="Sam Rivera"></div>
+      <div class="field"><label for="f-phone">Call or text</label><input id="f-phone" data-key="phone" value="(518) 555-0142"></div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" data-key="email" value="sam@dogguardcapital.com"></div>
+      <div class="field"><label for="f-hub">Dealer hub link (QR target)</label><input id="f-hub" data-key="hub" value="https://dogguard.com/pro/capital-region"></div>
+      <div class="field"><label for="f-area">Service area</label><input id="f-area" data-key="area" value="Albany, Saratoga and Rensselaer counties"></div>
+
+      <h3>Offers</h3>
+      <div class="field"><label for="f-credit">Credit toward installation ($)</label><input id="f-credit" data-key="credit" value="150"></div>
+      <div class="field"><label for="f-reward">Partner thank-you (per install)</label><input id="f-reward" data-key="reward" value="$50 gift card, a $50 rescue donation, or credit toward their own system"></div>
+
+      <h3>Realtor pieces</h3>
+      <div class="field"><label for="f-realtor">Agent name</label><input id="f-realtor" data-key="realtor" value="Jordan Bell"></div>
+      <div class="field"><label for="f-brokerage">Brokerage</label><input id="f-brokerage" data-key="brokerage" value="Hudson Valley Realty"></div>
+      <div class="field"><label for="f-address">Property address (certificate)</label><input id="f-address" data-key="address" value="14 Maple Ridge Dr, Delmar"></div>
+      <div class="field"><label for="f-valid">Certificate valid through</label><input id="f-valid" data-key="valid" value="March 31, 2027"></div>
+
+      <h3>Community and builder inserts</h3>
+      <div class="field"><label for="f-community">Community / HOA name</label><input id="f-community" data-key="community" value="Maple Ridge Estates"></div>
+      <div class="field"><label for="f-builder">Builder / development name</label><input id="f-builder" data-key="builder" value="Ridgeline Homes"></div>
+
+      <h3>Partner referral card</h3>
+      <div class="field"><label for="f-partner">Partner name (card, counter pieces)</label><input id="f-partner" data-key="partner" value="Bell Team, Hudson Valley Realty"></div>
+      <div class="field"><label for="f-code">Partner code</label><input id="f-code" data-key="code" value="BELL"></div>
+
+      <button class="reset" id="reset" type="button">Reset to example values</button>
+    </aside>
+
+    <main>
+      <div class="tabbar">
+        <div class="tabs" role="tablist" aria-label="Kit sections">
+          <span class="tabs-label">Kit</span>
+          <button class="tab" role="tab" data-tab="core" aria-selected="true">Core pieces</button>
+          <button class="tab" role="tab" data-tab="playbook" aria-selected="false">Dealer playbook</button>
+          <button class="tab" role="tab" data-tab="notes" aria-selected="false">Program notes</button>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Partner inserts">
+          <span class="tabs-label">Inserts</span>
+          <button class="tab" role="tab" data-tab="realtor" aria-selected="false">Realtor</button>
+          <button class="tab" role="tab" data-tab="hoa" aria-selected="false">HOA manager</button>
+          <button class="tab" role="tab" data-tab="developer" aria-selected="false">Developer</button>
+          <button class="tab" role="tab" data-tab="vet" aria-selected="false">Veterinarian</button>
+          <button class="tab" role="tab" data-tab="groomer" aria-selected="false">Groomer &amp; daycare</button>
+        </div>
+      </div>
+
+      <!-- ================= CORE ================= -->
+      <section data-panel="core">
+
+        <div class="piece" data-print-id="leave" data-page="6in 4in">
+          <div class="piece-head"><h2>Leave-behind card</h2><span class="size">6 × 4 in postcard, two sides</span><button class="print" type="button" data-print="leave">Print this piece</button></div>
+          <p class="piece-note">The card that lives on a partner's counter. Front is the brand and the Pro; back answers the first three objections without a conversation.</p>
+          <div class="stages">
+            <div class="stage" data-w="576" data-h="384">
+              <div class="sheet postcard navy lb-front">
+                <img class="bg" src="" data-photo="YARD" alt=""><div class="veil"></div>
+                <div style="display:flex;flex-direction:column;height:100%">
+                  <img src="logo.png" alt="Dog Guard Out of Sight Fencing">
+                  <p class="tagline">Freedom for your pet, peace of mind for you.</p>
+                  <div class="pro">
+                    <p class="eyebrow">Your local Dog Guard® Pro</p>
+                    <p class="name" data-bind="dealer"></p>
+                    <p class="meta"><span data-bind="owner"></span> · <span data-bind="phone"></span></p>
+                  </div>
+                </div>
+                <div class="side">
+                  <div class="qr" data-qr="hub" data-size="118"></div>
+                  <p>Scan to hear from a neighbor and book a free consultation</p>
+                </div>
+              </div>
+            </div>
+            <div class="stage" data-w="576" data-h="384">
+              <div class="sheet postcard lb-back">
+                <h2>Out of Sight Fencing, professionally installed.</h2>
+                <div class="pts">
+                  <div><b>Custom to your yard.</b> Your Pro designs the boundary around your property, gardens, pool and driveway. Nothing to see, nothing to build.</div>
+                  <div><b>Works for any dog.</b> Any breed, any size, more than one dog. Training with your Pro teaches the boundary, and the flags come down.</div>
+                  <div><b>Made in the USA for 35+ years.</b> Backed by a local, independently owned business and the Dog Guard® home office.</div>
+                </div>
+                <div class="cta">
+                  <div><b>Free in-home consultation</b><br>Call or text <span data-bind="phone"></span></div>
+                  <div style="text-align:right"><span data-bind="dealer"></span><br><span style="color:#7A8798">Serving <span data-bind="area"></span></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="how" data-page="letter portrait">
+          <div class="piece-head"><h2>How It Works one-pager</h2><span class="size">US Letter</span><button class="print" type="button" data-print="how">Print this piece</button></div>
+          <p class="piece-note">The sheet a partner can hand to anyone who asks a question. Written so a receptionist or agent never has to explain the product themselves.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">Freedom for your pet<br>Peace of mind for you</div></div>
+                <div class="hero" style="height:128px"><img src="" data-photo="PORCH" alt="" style="object-position:50% 45%"></div>
+                <div class="body">
+                  <div>
+                    <div class="title">Out of Sight Fencing, explained</div>
+                    <div class="sub">The three questions everyone asks, answered on one page.</div>
+                  </div>
+                  <div>
+                    <h3>How it works</h3>
+                    <div class="steps">
+                      <div class="step"><b>1</b><p>Your local Pro designs a boundary that fits your property, then installs a thin wire just below the surface. Nothing is visible when it's done.</p></div>
+                      <div class="step"><b>2</b><p>Your dog wears a lightweight receiver collar that recognizes the boundary.</p></div>
+                      <div class="step"><b>3</b><p>Small flags mark the boundary while your dog learns it. Your Pro walks you through the training.</p></div>
+                      <div class="step"><b>4</b><p>Near the boundary, the collar gives a warning tone, then a brief, safe correction. Dogs learn the line, and the flags come down.</p></div>
+                    </div>
+                  </div>
+                  <div class="two">
+                    <div>
+                      <h3>The three questions</h3>
+                      <div class="qa">
+                        <div><p class="q">Does it hurt my dog?</p><p>No. The correction is brief and safe, and it is paired with a warning tone your dog learns to respect first. The goal of training is a dog that turns back at the tone. Your Pro tailors the settings to your dog and checks in as training progresses.</p></div>
+                        <div><p class="q">Will it work for my dog?</p><p>Dog Guard® systems are installed for every breed and size, from stubborn diggers to timid rescues, and for households with more than one dog. Your Pro will tell you honestly if a dog is not a good candidate.</p></div>
+                        <div><p class="q">What does it cost?</p><p>Every quote starts with a free in-home consultation and is written for your property. Because there is nothing to build, the cost is a fraction of a physical fence, with no permits, no lumber, and nothing an HOA needs to approve.</p></div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3>Why Dog Guard®</h3>
+                      <div style="height:70px;overflow:hidden;border-radius:8px;margin-bottom:8px"><img class="photo" src="" data-photo="FLAG" alt="" style="object-position:50% 45%"></div>
+                      <div class="why" style="grid-template-columns:1fr">
+                        <div><b>American-made for 35+ years</b>Designed and built in the USA and sold only through trained local Pros.</div>
+                        <div><b>A local business, not a call center</b>Your Pro installs it, trains your dog, and is the person who answers when you call.</div>
+                        <div><b>Built for real yards</b>Any lot size or shape, and boundaries that keep dogs out of gardens, pools and driveways too.</div>
+                        <div><b>Works where fences can't</b>Large lots, wooded lots, corner lots, and communities that restrict physical fencing.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pro-block">
+                    <div>
+                      <p class="eyebrow" style="opacity:.85">Your local Dog Guard® Pro</p>
+                      <p class="name" data-bind="dealer"></p>
+                      <p class="meta"><span data-bind="owner"></span> · Call or text <span data-bind="phone"></span> · <span data-bind="email"></span></p>
+                      <p class="meta">Serving <span data-bind="area"></span></p>
+                    </div>
+                    <div class="qr" data-qr="hub" data-size="84"></div>
+                  </div>
+                </div>
+                <div class="foot"><span>Dog Guard® Out of Sight Fencing • How It Works</span><span>dogguard.com</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="refcard" data-page="3.5in 2in">
+          <div class="piece-head"><h2>Partner referral card</h2><span class="size">3.5 × 2 in business card</span><button class="print" type="button" data-print="refcard">Print this piece</button></div>
+          <p class="piece-note">Printed per partner with their name and code. The QR carries the code, so a scan is tracked even when the card is never mentioned. Give each partner a stack of 25.</p>
+          <div class="stages">
+            <div class="stage" data-w="336" data-h="192">
+              <div class="sheet bizcard ref-card">
+                <div style="display:flex;flex-direction:column;height:100%">
+                  <p class="eyebrow">You were referred by</p>
+                  <p class="who" data-bind="partner"></p>
+                  <p class="offer">Referred customers get a free in-home consultation and <b>$<span data-bind="credit"></span> toward installation</b> from <span data-bind="dealer"></span>.</p>
+                  <p class="code">Scan, or call <span data-bind="phone"></span> and mention <b data-bind="code"></b></p>
+                </div>
+                <div class="side">
+                  <img class="logo" src="logo.png" alt="Dog Guard">
+                  <div class="qr" data-qr="ref" data-size="82"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= REALTOR ================= -->
+      <section data-panel="realtor" hidden>
+
+        <div class="piece" data-print-id="showing" data-page="6in 4in">
+          <div class="piece-head"><h2>Showing card: "No fence? No problem."</h2><span class="size">6 × 4 in postcard</span><button class="print" type="button" data-print="showing">Print this piece</button></div>
+          <p class="piece-note">Left at showings of unfenced listings, or kept in the agent's folder for the moment a buyer mentions the dog. Turns the missing fence from a deal-breaker into a line item.</p>
+          <div class="stages">
+            <div class="stage" data-w="576" data-h="384">
+              <div class="sheet postcard show">
+                <div class="head"><h1>No fence?<br>No problem.</h1><img src="logo.png" alt="Dog Guard Out of Sight Fencing"></div>
+                <div class="mid">
+                  <div>
+                    <p>Dogs and a fence-free yard can go together. Dog Guard® Out of Sight Fencing keeps dogs safely at home with nothing to see, nothing to build, and nothing for an HOA to approve. It's professionally installed by a local Pro soon after closing, at a fraction of the cost of a physical fence.</p>
+                    <div class="box"><b>Want a number before you decide?</b> Text the listing address to <span data-bind="phone"></span>. <span data-bind="dealer"></span> will send a written ballpark quote within 1 business day, no visit required.</div>
+                  </div>
+                  <div class="side">
+                    <img class="photo" src="" data-photo="LAWN" alt="" style="object-position:60% 55%">
+                    <div class="qr" data-qr="ref" data-size="84"></div>
+                    <p>Scan for a 2-minute look at how it works</p>
+                  </div>
+                </div>
+                <div class="base"><span>Shared by <span data-bind="realtor"></span>, <span data-bind="brokerage"></span></span><span>dogguard.com</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="cert" data-page="8.5in 5.5in">
+          <div class="piece-head"><h2>Closing-gift certificate</h2><span class="size">8.5 × 5.5 in, landscape</span><button class="print" type="button" data-print="cert">Print this piece</button></div>
+          <p class="piece-note">The agent's housewarming gift. It costs the agent nothing, it is memorable, and it puts the Pro in the house within the first month of ownership. The credit is the dealer's own number.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="528">
+              <div class="sheet half cert">
+                <div class="inner">
+                  <div style="display:flex;flex-direction:column;height:100%">
+                    <p class="eyebrow">A housewarming gift</p>
+                    <h1>Welcome home.</h1>
+                    <p class="from">With best wishes from <b data-bind="realtor"></b>, <span data-bind="brokerage"></span></p>
+                    <p class="terms">This certificate entitles the new owners of <b data-bind="address"></b> to a <b>free in-home consultation</b> and <span class="amt">$<span data-bind="credit"></span></span> toward a professionally installed Dog Guard® Out of Sight Fencing system from <b data-bind="dealer"></b>.</p>
+                    <div class="row">
+                      <div><span>To redeem</span>Call or text <b data-bind="phone"></b></div>
+                      <div><span>Valid through</span><b data-bind="valid"></b></div>
+                      <div><span>Certificate</span><b><span data-bind="code"></span>-______</b></div>
+                    </div>
+                    <p class="fine">One certificate per household. Credit is applied to the installed price of a new Dog Guard® system and has no cash value. Present this certificate at your consultation. Not combinable with other offers unless your Pro says otherwise.</p>
+                  </div>
+                  <div class="side">
+                    <img class="photo" src="" data-photo="PORCH" alt="">
+                    <img class="logo" src="logo.png" alt="Dog Guard Out of Sight Fencing">
+                    <div><div class="qr" data-qr="ref" data-size="96"></div><p>Scan to schedule</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="agent" data-page="letter portrait">
+          <div class="piece-head"><h2>Agent sheet: the fence conversation</h2><span class="size">US Letter</span><button class="print" type="button" data-print="agent">Print this piece</button></div>
+          <p class="piece-note">Given to the agent, not the buyer. Three moments where the fence comes up, what to say at each, and an email the agent can forward without editing.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc dense">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">For real estate<br>professionals</div></div>
+                <div class="hero"><img src="" data-photo="CONSULT" alt="" style="object-position:50% 35%"></div>
+                <div class="body">
+                  <div>
+                    <div class="title">The fence conversation</div>
+                    <div class="sub">How to keep an unfenced yard from costing you a buyer.</div>
+                  </div>
+                  <p>Many of your buyers own a dog, and some walk away from a house they otherwise love because there is no fence and a physical one is now a serious expense. You don't need to solve that yourself. You need one sentence and a card.</p>
+                  <div>
+                    <h3>Three moments, three sentences</h3>
+                    <div class="qa">
+                      <div><p class="q">At the showing, when the buyer mentions the dog</p><div class="script">"Don't let the fence decide it. There's an invisible option that's a fraction of the cost, and a local installer who will give you a number from the address before you make an offer." <i>Hand them the card.</i></div></div>
+                      <div><p class="q">During the offer or inspection period</p><div class="script">"Would it help to have a written fence quote in hand while you decide? I can have one sent over tomorrow." <i>Text the address to <span data-bind="phone"></span>. <span data-bind="dealer"></span> replies within 1 business day.</i></div></div>
+                      <div><p class="q">At closing</p><div class="script">"One more thing for the dog." <i>Give them the Welcome Home certificate. It is a free consultation plus $<span data-bind="credit"></span> toward installation, with your name on it.</i></div></div>
+                    </div>
+                  </div>
+                  <div class="two">
+                    <div>
+                      <h3>Email you can forward as-is</h3>
+                      <div class="script">
+                        <p><b>Subject:</b> About the yard at [address]</p>
+                        <p style="margin-top:6px">Hi [name],<br><br>You mentioned [dog's name] when we toured the house. Since there's no fence, I wanted to pass along an option a lot of my clients use: Dog Guard® Out of Sight Fencing. It's an invisible, professionally installed boundary that costs a fraction of a physical fence and doesn't need HOA approval.<br><br>The local installer is <span data-bind="dealer"></span>. If you'd like a ballpark before you decide on the house, reply with a yes and I'll have them send a written quote from the address, no visit needed.<br><br>[Your name]</p>
+                      </div>
+                    </div>
+                    <div>
+                      <h3>If a buyer asks</h3>
+                      <div class="qa">
+                        <div><p class="q">"Is it humane?"</p><p>The collar gives a warning tone first, then a brief, safe correction. Training with the Pro teaches the dog to turn back at the tone. It's been used in American homes for more than 35 years.</p></div>
+                        <div><p class="q">"How fast can it be installed?"</p><p>Usually within a few weeks of closing, weather permitting. Nothing has to be built, so there's no permit and no HOA review.</p></div>
+                        <div><p class="q">"Does it work for my dog?"</p><p>Every breed and size, including multi-dog homes. The Pro will say so plainly if a dog isn't a good candidate.</p></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pro-block">
+                    <div>
+                      <p class="eyebrow" style="opacity:.85">Your Dog Guard® partner</p>
+                      <p class="name" data-bind="dealer"></p>
+                      <p class="meta"><span data-bind="owner"></span> · Call or text <span data-bind="phone"></span> · <span data-bind="email"></span></p>
+                      <p class="meta">Address quotes within 1 business day · Serving <span data-bind="area"></span></p>
+                    </div>
+                    <div class="qr" data-qr="ref" data-size="84"></div>
+                  </div>
+                </div>
+                <div class="foot"><span>Dog Guard® Out of Sight Fencing • For Real Estate Professionals</span><span>dogguard.com</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= HOA / COMMUNITY ================= -->
+      <section data-panel="hoa" hidden>
+
+        <div class="piece" data-print-id="hoa-sheet" data-page="letter portrait">
+          <div class="piece-head"><h2>Community manager sheet</h2><span class="size">US Letter</span><button class="print" type="button" data-print="hoa-sheet">Print this piece</button></div>
+          <p class="piece-note">For the HOA board or the community management company. The pitch is compliance and fewer headaches, not pets: a fence-restricted community solves a problem it created by giving residents an option that never needs architectural review.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">For community<br>associations</div></div>
+                <div class="hero"><img src="" data-photo="LAWN" alt="" style="object-position:50% 55%"></div>
+                <div class="body">
+                  <div>
+                    <div class="title">Dogs welcome. Fences optional.</div>
+                    <div class="sub">A compliant pet containment option for fence-restricted communities.</div>
+                  </div>
+                  <p>Communities that limit or prohibit physical fencing hear the same request every spring: a resident with a dog asks for a variance, the board says no, and everyone is unhappy. Dog Guard® Out of Sight Fencing gives those residents a way to keep their dog safely at home with nothing visible, nothing built, and nothing for the architectural review committee to rule on.</p>
+                  <div class="two">
+                    <div>
+                      <h3>What it does for the community</h3>
+                      <ul>
+                        <li><b>Fewer variance requests.</b> Residents get a yes without a fence, so the request never reaches the board.</li>
+                        <li><b>Nothing to review.</b> The boundary wire is below the surface and the small training flags come down within weeks. No permits, no setbacks, no sightlines.</li>
+                        <li><b>Fewer loose dogs.</b> Dogs that stay in their own yard mean fewer complaints, fewer close calls on the street, and fewer calls to animal control.</li>
+                        <li><b>Neighbor-friendly.</b> No fence disputes over property lines, shared boundaries or maintenance.</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3>Three easy ways to offer it</h3>
+                      <ul>
+                        <li><b>Welcome packet insert.</b> A one-page card for new residents (enclosed). We supply it printed, or as a PDF for your digital packet.</li>
+                        <li><b>Newsletter or portal note.</b> A short blurb you can paste as-is (below).</li>
+                        <li><b>Community day table.</b> Your local Pro attends the annual meeting or block party to answer questions. No selling from the table.</li>
+                      </ul>
+                      <p style="margin-top:8px">Residents of <b data-bind="community"></b> receive a free in-home consultation and $<span data-bind="credit"></span> toward installation when they mention the community code <b data-bind="code"></b>.</p>
+                    </div>
+                  </div>
+                  <div>
+                    <h3>Newsletter blurb, ready to paste</h3>
+                    <div class="script"><b>Have a dog but no fence?</b> Our covenants limit physical fencing, but there is an approved-by-default option: Dog Guard® Out of Sight Fencing, an invisible, professionally installed boundary that needs no architectural review. <span data-bind="dealer"></span>, our local Dog Guard® Pro, offers <span data-bind="community"></span> residents a free in-home consultation and $<span data-bind="credit"></span> toward installation. Call or text <span data-bind="phone"></span> and mention code <span data-bind="code"></span>.</div>
+                  </div>
+                  <div class="pro-block">
+                    <div>
+                      <p class="eyebrow" style="opacity:.85">Your local Dog Guard® Pro</p>
+                      <p class="name" data-bind="dealer"></p>
+                      <p class="meta"><span data-bind="owner"></span> · Call or text <span data-bind="phone"></span> · <span data-bind="email"></span></p>
+                      <p class="meta">Serving <span data-bind="area"></span> · American-made for 35+ years</p>
+                    </div>
+                    <div class="qr" data-qr="ref" data-size="84"></div>
+                  </div>
+                </div>
+                <div class="foot"><span>Dog Guard® Out of Sight Fencing • For Community Associations</span><span>dogguard.com</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="hoa-welcome" data-page="5.5in 8.5in">
+          <div class="piece-head"><h2>Welcome packet insert</h2><span class="size">5.5 × 8.5 in, portrait</span><button class="print" type="button" data-print="hoa-welcome">Print this piece</button></div>
+          <p class="piece-note">Goes into the new-resident packet, printed or as a PDF. Written to the resident, in the community's name, with the community code for tracking.</p>
+          <div class="stages">
+            <div class="stage" data-w="528" data-h="816">
+              <div class="sheet halfp welcome">
+                <div class="head">
+                  <img class="photo" src="" data-photo="PORCH" alt="">
+                  <p class="eyebrow">Welcome to <span data-bind="community"></span></p>
+                  <h1>Bringing a dog?<br>You won't need a fence.</h1>
+                </div>
+                <div class="mid">
+                  <p>Our community keeps yards open, which is part of what makes it a nice place to live. It also means a physical fence isn't an option for most homes. If you have a dog, here's the good news: you don't need one.</p>
+                  <p><b>Dog Guard® Out of Sight Fencing</b> is an invisible boundary installed by a local professional. A thin wire below the surface marks your yard, and your dog wears a lightweight collar that recognizes the line. Training takes a few weeks, the small flags come down, and your dog has the run of the yard.</p>
+                  <div class="pts">
+                    <div><b>Nothing to build or approve.</b> No permits, no architectural review, nothing your neighbors can see.</div>
+                    <div><b>Custom to your yard.</b> Keeps dogs in the yard and out of the garden, the pool and the street.</div>
+                    <div><b>Works for any dog.</b> Every breed and size, including more than one.</div>
+                  </div>
+                </div>
+                <div class="offer">
+                  <div><p class="eyebrow">Resident offer</p>
+                  <p><b>Free in-home consultation and $<span data-bind="credit"></span> toward installation.</b> Call or text <span data-bind="dealer"></span> at <b data-bind="phone"></b> and mention code <b data-bind="code"></b>, or scan.</p></div>
+                  <div class="qr" data-qr="ref" data-size="90"></div>
+                </div>
+                <div class="base"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><span>Provided by <span data-bind="dealer"></span>, your local Dog Guard® Pro</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= DEVELOPER / BUILDER ================= -->
+      <section data-panel="developer" hidden>
+
+        <div class="piece" data-print-id="dev-sheet" data-page="letter portrait">
+          <div class="piece-head"><h2>Builder partner sheet</h2><span class="size">US Letter</span><button class="print" type="button" data-print="dev-sheet">Print this piece</button></div>
+          <p class="piece-note">For the builder's sales manager or the developer. This is a program, not a leave-behind: it offers three ways to work together so the conversation lands on whichever one the builder already does with other vendors. Assumed structure until the dealers who started these relationships report back.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">For builders and<br>developers</div></div>
+                <div class="hero"><img src="" data-photo="DRIVE" alt="" style="object-position:50% 60%"></div>
+                <div class="body">
+                  <div>
+                    <div class="title">Sell the lot without the fence</div>
+                    <div class="sub">A pet containment option for new-construction communities.</div>
+                  </div>
+                  <p>Buyers with dogs ask about the fence before they ask about the kitchen, and in a community that restricts fencing, or on a lot where a fence would cost more than the landscaping, that question can stall a sale. Dog Guard® Out of Sight Fencing lets your sales team answer it in one sentence and lets you offer it as a line item, an amenity, or a referral, whichever fits how you sell.</p>
+                  <div class="why">
+                    <div><b>Closes the dog objection</b>An invisible boundary at a fraction of a physical fence, with no permit and no ARC review.</div>
+                    <div><b>Fits the build schedule</b>Installed at landscaping, before sod or seed, so there's no disturbance after move-in.</div>
+                    <div><b>No neighbor disputes</b>Nothing on the property line, nothing to maintain, nothing that changes the streetscape.</div>
+                  </div>
+                  <div>
+                    <h3>Three ways to work together</h3>
+                    <div class="steps" style="grid-template-columns:repeat(3,1fr)">
+                      <div class="step"><b>A</b><p><b>Upgrade option.</b> Pet containment goes on your design-center options list at a builder price with your margin. We install at landscaping and train the homeowner after move-in.</p></div>
+                      <div class="step"><b>B</b><p><b>Move-in amenity.</b> Every closing includes a free consultation and a $<span data-bind="credit"></span> credit toward installation, branded to <span data-bind="builder"></span>. Costs you nothing; gives your sales team a yes.</p></div>
+                      <div class="step"><b>C</b><p><b>Model-home referral.</b> A small display in the model home and a card in the sales office. Buyers contact us directly and mention <span data-bind="builder"></span>.</p></div>
+                    </div>
+                  </div>
+                  <div class="two">
+                    <div>
+                      <h3>What we provide</h3>
+                      <ul>
+                        <li>A written spec and price sheet for your options list, by lot size</li>
+                        <li>A demo installation at the model home at no cost to you</li>
+                        <li>Coordination with your landscaper on timing</li>
+                        <li>Homeowner training and support after close, so your warranty desk never hears about it</li>
+                        <li>Sales-office cards and a one-page explainer your team can hand out</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3>What we ask</h3>
+                      <ul>
+                        <li>A 20-minute meeting with your sales manager</li>
+                        <li>A place for the display in the model home</li>
+                        <li>The option added to your list, or the amenity added to your closing packet</li>
+                      </ul>
+                      <p style="margin-top:8px">Dog Guard® is designed and built in the USA and sold only through trained local Pros. <span data-bind="dealer"></span> is the Pro for <span data-bind="area"></span>.</p>
+                    </div>
+                  </div>
+                  <div class="pro-block">
+                    <div>
+                      <p class="eyebrow" style="opacity:.85">Your Dog Guard® partner</p>
+                      <p class="name" data-bind="dealer"></p>
+                      <p class="meta"><span data-bind="owner"></span> · Call or text <span data-bind="phone"></span> · <span data-bind="email"></span></p>
+                    </div>
+                    <div class="qr" data-qr="ref" data-size="84"></div>
+                  </div>
+                </div>
+                <div class="foot"><span>Dog Guard® Out of Sight Fencing • For Builders and Developers</span><span>dogguard.com</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="dev-option" data-page="8.5in 5.5in">
+          <div class="piece-head"><h2>Design-center option card</h2><span class="size">8.5 × 5.5 in, landscape</span><button class="print" type="button" data-print="dev-option">Print this piece</button></div>
+          <p class="piece-note">What the buyer sees in the design center or closing packet. Reads like any other option on the builder's list. The price line is intentionally blank for the builder or the Pro to fill in.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="528">
+              <div class="sheet half option">
+                <div class="head">
+                  <div><p class="eyebrow">Home option</p><h1>Pet containment, built in</h1><p class="sub">Dog Guard® Out of Sight Fencing, professionally installed with your landscaping</p></div>
+                  <img src="logo.png" alt="Dog Guard Out of Sight Fencing">
+                </div>
+                <div class="strip"><img class="photo" src="" data-photo="YARD" alt="" style="object-position:50% 45%"></div>
+                <div class="mid">
+                  <div>
+                    <h3>What's included</h3>
+                    <ul>
+                      <li>Custom boundary designed for your lot, including gardens, pool and driveway</li>
+                      <li>Installation at landscaping, before sod, so nothing is disturbed after you move in</li>
+                      <li>Receiver collar for your dog (additional collars available)</li>
+                      <li>Training visit with your local Dog Guard® Pro after move-in</li>
+                      <li>Local support from <span data-bind="dealer"></span></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3>Why buyers choose it</h3>
+                    <ul>
+                      <li>Nothing visible, nothing to maintain, nothing for the HOA to approve</li>
+                      <li>A fraction of the cost of a physical fence on the same lot</li>
+                      <li>Works for any breed and size, and for more than one dog</li>
+                      <li>American-made for 35+ years</li>
+                    </ul>
+                    <div class="price"><span>Option price</span><b>$ __________</b></div>
+                  </div>
+                </div>
+                <div class="base"><span>Offered by <span data-bind="builder"></span> · Installed by <span data-bind="dealer"></span> · Questions: <span data-bind="phone"></span></span><div class="qr" data-qr="ref" data-size="56"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="dev-model" data-page="6in 4in">
+          <div class="piece-head"><h2>Model-home yard sign card</h2><span class="size">6 × 4 in, for a sign frame or easel</span><button class="print" type="button" data-print="dev-model">Print this piece</button></div>
+          <p class="piece-note">Sits in the model home's yard or by the patio door, where buyers look at the lot. Marks the demo installation and points to the sales office.</p>
+          <div class="stages">
+            <div class="stage" data-w="576" data-h="384">
+              <div class="sheet postcard navy model-sign">
+                <img class="bg" src="" data-photo="YARD" alt=""><div class="veil"></div>
+                <img src="logo.png" alt="Dog Guard Out of Sight Fencing">
+                <h1>This yard has a fence.<br>You just can't see it.</h1>
+                <p>This home is protected by Dog Guard® Out of Sight Fencing, an invisible boundary installed with the landscaping. Ask in the sales office about adding it to your home, or scan to see how it works.</p>
+                <div class="row"><span>Installed by <span data-bind="dealer"></span> · <span data-bind="phone"></span></span><div class="qr" data-qr="ref" data-size="72"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= VETERINARIAN ================= -->
+      <section data-panel="vet" hidden>
+
+        <div class="piece" data-print-id="vet-sheet" data-page="letter portrait">
+          <div class="piece-head"><h2>Practice sheet</h2><span class="size">US Letter</span><button class="print" type="button" data-print="vet-sheet">Print this piece</button></div>
+          <p class="piece-note">For the practice manager. Framed around safety, kept clear of anything that sounds like a kickback, and built so the front desk never has to explain the product. This replaces the old vet program's assumption that the practice wants credit toward a fence of its own.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">For veterinary<br>practices</div></div>
+                <div class="hero"><img src="" data-photo="FLAG" alt="" style="object-position:50% 40%"></div>
+                <div class="body">
+                  <div>
+                    <div class="title">Fewer dogs in the road</div>
+                    <div class="sub">A simple answer for clients who ask about keeping their dog home.</div>
+                  </div>
+                  <p>Your team sees the outcome when containment fails: the dog hit on the road, the one that got into a neighbor's yard, the puppy that slipped a leash. Your clients ask you about fences, tie-outs and yard safety, and your staff has better things to do than explain the options. This program gives them a card to hand over and nothing else to do.</p>
+                  <div class="two">
+                    <div>
+                      <h3>How it fits your practice</h3>
+                      <ul>
+                        <li><b>Puppy and new-client packets.</b> A "growing up safe at home" insert (enclosed) that covers containment alongside the basics.</li>
+                        <li><b>The front desk.</b> A small card holder and the enclosed one-page explainer for the moment a client mentions a move, a new house, or a dog that keeps getting out.</li>
+                        <li><b>Nothing to endorse.</b> The materials describe the product; your practice recommends nothing and is never named in our advertising.</li>
+                      </ul>
+                      <h3 style="margin-top:14px">How we say thanks</h3>
+                      <p>We don't pay referral fees to practices. When a client who came from your desk installs a system, <span data-bind="dealer"></span> makes a donation in your practice's name to a local rescue or shelter of your choosing, and lets your team know. If your staff would prefer something for the break room instead, just say so.</p>
+                    </div>
+                    <div>
+                      <h3>What your team can say</h3>
+                      <div class="script">"There's a local company that installs invisible fencing. Here's their card. They'll come out for free and tell you honestly whether it fits your yard and your dog." <i>That's it. Hand them the card.</i></div>
+                      <h3 style="margin-top:14px">If a client asks your staff</h3>
+                      <div class="qa">
+                        <div><p class="q">"Is it safe?"</p><p>The collar gives a warning tone first, then a brief, safe correction. Training teaches the dog to turn back at the tone. Dog Guard® has been in American homes for more than 35 years.</p></div>
+                        <div><p class="q">"Would it work for my dog?"</p><p>Nearly all breeds and sizes, including multi-dog homes. The local Pro assesses each dog at the consultation and will say plainly if a dog is not a good candidate.</p></div>
+                        <div><p class="q">"What does it cost?"</p><p>A free in-home consultation comes first. It is a fraction of a physical fence and, for your clients, $<span data-bind="credit"></span> toward installation with the code on the card.</p></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pro-block">
+                    <div>
+                      <p class="eyebrow" style="opacity:.85">Your local Dog Guard® Pro</p>
+                      <p class="name" data-bind="dealer"></p>
+                      <p class="meta"><span data-bind="owner"></span> · Call or text <span data-bind="phone"></span> · <span data-bind="email"></span></p>
+                      <p class="meta">Restock or questions: text the number above · Serving <span data-bind="area"></span></p>
+                    </div>
+                    <div class="qr" data-qr="ref" data-size="84"></div>
+                  </div>
+                </div>
+                <div class="foot"><span>Dog Guard® Out of Sight Fencing • For Veterinary Practices</span><span>dogguard.com</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="vet-puppy" data-page="5.5in 8.5in">
+          <div class="piece-head"><h2>Puppy packet insert: "Growing up safe at home"</h2><span class="size">5.5 × 8.5 in, portrait</span><button class="print" type="button" data-print="vet-puppy">Print this piece</button></div>
+          <p class="piece-note">A checklist that earns its place in the puppy packet on its own, with containment as one item among several. It gets kept because it's useful, and it names your Pro because they supplied it.</p>
+          <div class="stages">
+            <div class="stage" data-w="528" data-h="816">
+              <div class="sheet halfp puppy">
+                <div class="band"><img class="photo" src="" data-photo="LAWN" alt="" style="object-position:60% 60%"></div>
+                <div class="head"><p class="eyebrow">A checklist for new dog owners</p><h1>Growing up safe at home</h1></div>
+                <ul class="list">
+                  <li><b>ID and microchip.</b> A collar tag with your phone number, and a microchip registered to you. Update both if you move.</li>
+                  <li><b>Vaccines and vet visits.</b> Keep the schedule your veterinarian gives you, and ask about parasite prevention for your area.</li>
+                  <li><b>The yard.</b> Walk it before your dog does. Look for gaps under gates, toxic plants, unsecured pools and open sheds.</li>
+                  <li><b>Containment.</b> A fenced yard, a leash, or an invisible fence. Tie-outs and "he just stays close" are how dogs end up in the road. If a physical fence isn't practical for your property, an Out of Sight Fencing system installed and trained by a local professional keeps your dog home with nothing to build.</li>
+                  <li><b>Training and socializing.</b> Short, positive sessions, early and often. A puppy class pays for itself.</li>
+                  <li><b>Household hazards.</b> Chocolate, grapes, xylitol, medications, cords and small toys. Keep them out of reach.</li>
+                  <li><b>Car rides.</b> A harness or crate, every time.</li>
+                  <li><b>A plan for "he got out."</b> Recent photo on your phone, a neighbor with your number, and your local shelter's number saved.</li>
+                </ul>
+                <div class="offer">
+                  <p>Containment questions? <b data-bind="dealer"></b> offers a free in-home consultation and $<span data-bind="credit"></span> toward installation with code <b data-bind="code"></b>. Call or text <b data-bind="phone"></b>.</p>
+                  <div class="qr" data-qr="ref" data-size="72"></div>
+                </div>
+                <div class="base"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><span>This checklist is general guidance. Your veterinarian's advice comes first.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= GROOMER / DAYCARE ================= -->
+      <section data-panel="groomer" hidden>
+
+        <div class="piece" data-print-id="groom-sheet" data-page="letter portrait">
+          <div class="piece-head"><h2>Groomer and daycare partner sheet</h2><span class="size">US Letter</span><button class="print" type="button" data-print="groom-sheet">Print this piece</button></div>
+          <p class="piece-note">For the shop owner. These partners are commercial, so the pitch can be plainer than the vet's: their customers already spend on the dog, the counter conversation is natural, and the thank-you is theirs to choose.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">For groomers and<br>daycares</div></div>
+                <div class="hero"><img src="" data-photo="CONSULT2" alt="" style="object-position:50% 30%"></div>
+                <div class="body">
+                  <div>
+                    <div class="title">Your customers ask. Here's the answer.</div>
+                    <div class="sub">A referral partnership for grooming salons and dog daycares.</div>
+                  </div>
+                  <p>Every week someone at your counter mentions a dog that got out, a new house with no fence, or a yard the dog can't be trusted in. You're the person they trust with the dog, so they ask you. This program gives you a card to hand them and a thank-you when it turns into an install.</p>
+                  <div class="two">
+                    <div>
+                      <h3>What you get</h3>
+                      <ul>
+                        <li><b>A counter display</b> with cards, restocked by us. No inventory to manage.</li>
+                        <li><b>Referral cards with your name on them</b> so we know who sent the customer.</li>
+                        <li><b>A thank-you for every install</b> that starts at your counter: <span data-bind="reward"></span>. You pick.</li>
+                        <li><b>A cross-promotion if you want one.</b> New Dog Guard® customers get a card for your shop, so the referrals run both ways.</li>
+                      </ul>
+                      <h3 style="margin-top:14px">What we ask</h3>
+                      <ul>
+                        <li>Space on the counter for the display</li>
+                        <li>When it comes up, hand the customer a card</li>
+                        <li>Let us know who to text for restocks</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3>What to say at the counter</h3>
+                      <div class="script">"You know what a lot of our customers use? Invisible fencing. The local guy will come out for free and give you a real quote. Here's his card, and if you mention us you get money off." <i>Twelve seconds. Hand them the card.</i></div>
+                      <h3 style="margin-top:14px">Daycare and boarding extra</h3>
+                      <p>Report cards go home with every dog. A line at the bottom, "Ask us about keeping <i>[dog]</i> safe at home," with our card stapled behind it, reaches every owner on their best day with the dog. We'll supply the cards.</p>
+                      <h3 style="margin-top:14px">The product, in one breath</h3>
+                      <p>An invisible boundary installed by a local Pro. The dog wears a collar, learns the line in a few weeks, and has the run of the yard. Any breed, any size, more than one dog. American-made for 35+ years. A fraction of the cost of a physical fence.</p>
+                    </div>
+                  </div>
+                  <div class="pro-block">
+                    <div>
+                      <p class="eyebrow" style="opacity:.85">Your local Dog Guard® Pro</p>
+                      <p class="name" data-bind="dealer"></p>
+                      <p class="meta"><span data-bind="owner"></span> · Call or text <span data-bind="phone"></span> · <span data-bind="email"></span></p>
+                      <p class="meta">Restocks: text the number above · Serving <span data-bind="area"></span></p>
+                    </div>
+                    <div class="qr" data-qr="ref" data-size="84"></div>
+                  </div>
+                </div>
+                <div class="foot"><span>Dog Guard® Out of Sight Fencing • For Groomers and Daycares</span><span>dogguard.com</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="groom-counter" data-page="6in 4in">
+          <div class="piece-head"><h2>Counter card</h2><span class="size">6 × 4 in, for a counter frame</span><button class="print" type="button" data-print="groom-counter">Print this piece</button></div>
+          <p class="piece-note">Stands in an acrylic frame next to the register with the referral cards in front of it. Speaks to the customer, credits the shop.</p>
+          <div class="stages">
+            <div class="stage" data-w="576" data-h="384">
+              <div class="sheet postcard counter">
+                <div class="band"><img class="photo" src="" data-photo="YARD" alt="" style="object-position:50% 40%"></div>
+                <div class="left">
+                  <p class="eyebrow">Ask us about</p>
+                  <h1>A fence you can't see.</h1>
+                  <p>Dog Guard® Out of Sight Fencing keeps dogs safely at home with nothing to build. Professionally installed by a local Pro, for any breed and size.</p>
+                  <p class="deal"><b>Customers of <span data-bind="partner"></span></b> get a free in-home consultation and <b>$<span data-bind="credit"></span> toward installation</b>. Take a card, or scan.</p>
+                </div>
+                <div class="right">
+                  <img src="logo.png" alt="Dog Guard Out of Sight Fencing">
+                  <div class="qr" data-qr="ref" data-size="96"></div>
+                  <p><span data-bind="dealer"></span><br><span data-bind="phone"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="groom-report" data-page="3.5in 2in">
+          <div class="piece-head"><h2>Report-card slip</h2><span class="size">3.5 × 2 in, staples behind a daycare report card</span><button class="print" type="button" data-print="groom-report">Print this piece</button></div>
+          <p class="piece-note">For daycares and boarding. Goes home with the dog's report card, so it lands in the owner's hand at the best possible moment.</p>
+          <div class="stages">
+            <div class="stage" data-w="336" data-h="192">
+              <div class="sheet bizcard slip">
+                <div>
+                  <p class="eyebrow">Sent home by <span data-bind="partner"></span></p>
+                  <p class="big">Had a great day here.<br>Keep the fun going at home.</p>
+                  <p class="small">An invisible fence gives your dog the whole yard, safely. Free consultation and $<span data-bind="credit"></span> toward installation for our customers. Call or text <b data-bind="phone"></b>, code <b data-bind="code"></b>.</p>
+                </div>
+                <div class="side"><img class="logo" src="logo.png" alt="Dog Guard"><div class="qr" data-qr="ref" data-size="64"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= PLAYBOOK ================= -->
+      <section data-panel="playbook" hidden>
+
+        <div class="piece" data-print-id="play1" data-page="letter portrait">
+          <div class="piece-head"><h2>Playbook, page 1: the drop-off</h2><span class="size">US Letter, dealer-facing</span><button class="print" type="button" data-print="play1">Print this piece</button></div>
+          <p class="piece-note">For the Pro, not for partners. Who to target, what to say in 30 seconds, and what to leave.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">Referral Partner<br>Program</div></div>
+                <div class="internal">For Dog Guard® Pros · Not for distribution</div>
+                <div class="body">
+                  <div>
+                    <div class="title">The drop-off</div>
+                    <div class="sub">Ten partners, one winter, a referral engine by spring.</div>
+                  </div>
+                  <div>
+                    <h3>Your first ten</h3>
+                    <div class="targets">
+                      <div><b>3</b>Realtors who list unfenced homes on larger lots or in fence-restricted communities</div>
+                      <div><b>2</b>Vet practices, chosen for the front desk, not the doctor</div>
+                      <div><b>2</b>Groomers or dog daycares with a busy counter</div>
+                      <div><b>1</b>Dog trainer, ideally one who runs puppy classes</div>
+                      <div><b>2</b>Wild cards: a fence company, a rescue, a builder's sales office</div>
+                    </div>
+                    <p style="margin-top:8px">Pick partners whose customers are already spending on the dog or on the house. A realtor who just closed a sale and a trainer running a puppy class are talking to your buyer this week.</p>
+                  </div>
+                  <div class="two">
+                    <div>
+                      <h3>The 30-second visit</h3>
+                      <div class="script">
+                        <p><i>Who you are.</i> "I'm <span data-bind="owner"></span>, I own <span data-bind="dealer"></span>. We install Dog Guard invisible fencing here in <span data-bind="area"></span>."</p>
+                        <p style="margin-top:6px"><i>Why you're here.</i> "Your customers ask you about fences and dogs more than you'd think. I'd like to make that an easy answer."</p>
+                        <p style="margin-top:6px"><i>What you're leaving.</i> "This card holder goes on the counter. The one-pager answers the questions people ask. These referral cards have your name on them."</p>
+                        <p style="margin-top:6px"><i>The ask.</i> "When it comes up, hand them a card. If it turns into an install, I'll thank you with <span data-bind="reward"></span>, your choice."</p>
+                        <p style="margin-top:6px"><i>The close.</i> "I'll check back in two weeks to see if you need more cards. Who's the best person to text?"</p>
+                      </div>
+                    </div>
+                    <div>
+                      <h3>Bring</h3>
+                      <ul class="check">
+                        <li>Card holder with 25 leave-behind cards</li>
+                        <li>5 How It Works one-pagers</li>
+                        <li>25 referral cards printed with this partner's name and code</li>
+                        <li>The insert for this partner type (realtor, HOA, builder, vet, groomer), 5 to 10 copies</li>
+                        <li>Something for the desk (coffee, donuts). Front desks remember it.</li>
+                        <li>Your phone: add the partner to your tracker before you leave the parking lot</li>
+                      </ul>
+                      <h3 style="margin-top:16px">Do</h3>
+                      <ul>
+                        <li>Wear Dog Guard® apparel. It starts the conversation for you.</li>
+                        <li>Ask for the front-desk person's name and text them, not the owner.</li>
+                        <li>Give every partner their own code. It is how you know who is sending you work.</li>
+                      </ul>
+                      <h3 style="margin-top:16px">Don't</h3>
+                      <ul>
+                        <li>Don't pitch the product. Pitch the easy answer.</li>
+                        <li>Don't offer a cash referral fee to a vet practice. Many can't accept one. Offer the rescue donation.</li>
+                        <li>Don't leave without a follow-up date.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="foot"><span>Dog Guard® Referral Partner Program • Playbook 1 of 3</span><span>Home office: (518) 687-0030</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="play2" data-page="letter portrait">
+          <div class="piece-head"><h2>Playbook, page 2: keeping partners warm</h2><span class="size">US Letter, dealer-facing</span><button class="print" type="button" data-print="play2">Print this piece</button></div>
+          <p class="piece-note">The 90-day cadence, what to do when a referral converts, and how to record it so it shows on the scorecard.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">Referral Partner<br>Program</div></div>
+                <div class="internal">For Dog Guard® Pros · Not for distribution</div>
+                <div class="body">
+                  <div>
+                    <div class="title">Keeping partners warm</div>
+                    <div class="sub">A kit in a drawer sends no referrals. The cadence is the program.</div>
+                  </div>
+                  <div>
+                    <h3>The 90-day cadence</h3>
+                    <div class="cad">
+                      <div><b>Day 0</b>Drop-off visit. Log the partner, the contact, and the code.</div>
+                      <div><b>Day 14</b>Text the front desk: "Need more cards?" Restock if yes. This visit is the one most Pros skip, and it's the one that matters.</div>
+                      <div><b>Day 30</b>Stop by with the one thing you promised (cards, a coffee) and one story: an install nearby, a customer video.</div>
+                      <div><b>Day 60</b>Share a result. "Your card sent us the Millers on Oak St. Thank you." Even if it was only a call.</div>
+                      <div><b>Day 90</b>Coffee or lunch with your top 3 partners. Ask what their customers ask. Repeat the cycle.</div>
+                    </div>
+                  </div>
+                  <div class="two">
+                    <div>
+                      <h3>When a referral converts</h3>
+                      <ul>
+                        <li><b>Within 48 hours:</b> text the partner. Name the customer if the customer says it's fine, otherwise the street.</li>
+                        <li><b>Within a week:</b> deliver the thank-you they chose: <span data-bind="reward"></span>.</li>
+                        <li><b>Ask the customer for a video</b> on your testimonial link. A partner's referral on video is the best restock gift you'll ever bring.</li>
+                        <li><b>Realtor referrals:</b> send the agent a photo of the finished yard with the dog in it. Agents share those.</li>
+                      </ul>
+                      <h3 style="margin-top:16px">Partner thank-you, their choice</h3>
+                      <p>Offer every partner the same menu and let them pick: a gift card, a donation in their name to a local rescue, or credit toward a Dog Guard® system of their own. Vets usually take the donation, agents usually take the gift card, and trainers often want the system. Set the amount once and keep it.</p>
+                    </div>
+                    <div>
+                      <h3>Record it or it didn't happen</h3>
+                      <ul>
+                        <li>Every partner gets a code. Put it on their referral cards and in the QR.</li>
+                        <li>When a lead mentions a code or scans a partner QR, enter the code in the lead source field in Zoho.</li>
+                        <li>Log each partner visit as a note on the partner record. The home office scorecard counts partner activity as effort, alongside reviews and testimonials.</li>
+                        <li>Once a quarter, look at the tracker: partners with zero referrals after 90 days get one more visit, then get replaced.</li>
+                      </ul>
+                      <h3 style="margin-top:16px">What good looks like</h3>
+                      <p>Ten active partners, four restock visits a month, and three referral installs a quarter in year one. Most Pros find two partners carry the program. Find those two and take care of them.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="foot"><span>Dog Guard® Referral Partner Program • Playbook 2 of 3</span><span>Home office: (518) 687-0030</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="piece" data-print-id="play3" data-page="letter portrait">
+          <div class="piece-head"><h2>Playbook, page 3: partner tracker</h2><span class="size">US Letter, dealer-facing</span><button class="print" type="button" data-print="play3">Print this piece</button></div>
+          <p class="piece-note">A paper version for the truck. The same fields belong in Zoho on the partner record.</p>
+          <div class="stages">
+            <div class="stage" data-w="816" data-h="1056">
+              <div class="sheet letter doc">
+                <div class="banner"><img src="logo.png" alt="Dog Guard Out of Sight Fencing"><div class="tag">Referral Partner<br>Program</div></div>
+                <div class="internal">For Dog Guard® Pros · Not for distribution</div>
+                <div class="body">
+                  <div>
+                    <div class="title">Partner tracker</div>
+                    <div class="sub"><span data-bind="dealer"></span> · Quarter of ________________</div>
+                  </div>
+                  <table class="tracker">
+                    <thead><tr><th>Partner</th><th>Type</th><th>Front-desk contact</th><th>Code</th><th>Dropped</th><th>Day 14</th><th>Day 30</th><th>Day 60</th><th>Day 90</th><th>Refs</th><th>Installs</th></tr></thead>
+                    <tbody id="tracker-rows"></tbody>
+                  </table>
+                  <p style="font-size:11.5px;color:#7A8798">Type: R realtor · V vet · G groomer or daycare · T trainer · F fence company · S rescue or shelter · B builder. Refs counts calls, scans and cards presented, not just installs.</p>
+                </div>
+                <div class="foot"><span>Dog Guard® Referral Partner Program • Playbook 3 of 3</span><span>Home office: (518) 687-0030</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= NOTES ================= -->
+      <section data-panel="notes" hidden>
+        <div class="notes">
+          <h2>Program notes for review</h2>
+          <p>What this draft assumes, and what is still open. Nothing here prints.</p>
+          <h3>Decisions built into the draft</h3>
+          <ul>
+            <li>Dealers print from files. Every offer is therefore a dealer-level offer, and the credit amount and partner thank-you are fill-in fields, not home office commitments.</li>
+            <li>The realtor certificate is a free consultation plus a fill-in credit.</li>
+            <li>Partner thank-you is "partner's choice" (gift card, rescue donation, or credit toward their own system) so the program doesn't depend on the old vet program's assumption that every partner wants a fence of their own.</li>
+            <li>Every partner (realtor, community, builder, practice or shop) gets a code. The QR on partner-specific pieces points at the dealer hub link with <code>?ref=CODE</code> appended, so scans can be attributed once the hub page records the parameter.</li>
+            <li>Product claims are kept general (brief, safe correction; fraction of the cost of a physical fence; 35+ years American-made). No dollar figures for physical fencing, no training timelines.</li>
+          </ul>
+          <h3>Still open</h3>
+          <ul>
+            <li>The Developer insert assumes three deal structures (upgrade option, move-in amenity, model-home referral) and leads with the dog objection. Adjust once the dealers who started builder relationships report how their deals were actually structured.</li>
+            <li>The Veterinarian insert deliberately offers no cash or fence credit to the practice; the thank-you is a rescue donation in the practice's name. Confirm this is the direction you want before it goes to dealers.</li>
+            <li>The HOA insert uses a "community code" per community so referrals from a welcome packet can be tracked like any partner.</li>
+            <li>Whether the hub page can read the <code>ref</code> parameter and pass it into Zoho as the lead source. If not, the code on the card still works by phone.</li>
+            <li>A brand-review pass on the safety language once you're happy with the copy.</li>
+            <li>Print-ready PDF and Word versions of each piece, produced after the copy is approved.</li>
+          </ul>
+          <h3>How to use this page</h3>
+          <p>Fill in the dealer details, pick a piece, and use "Print this piece" to print or save that piece as a PDF at its true size. The example values are placeholders, not a real dealer.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>window.DG_PHOTOS = {"PORCH": "photos/porch.jpg", "YARD": "photos/yard.jpg", "DRIVE": "photos/driveway.jpg", "FLAG": "photos/flags.jpg", "CONSULT": "photos/consult.jpg", "CONSULT2": "photos/consult2.jpg", "LAWN": "photos/lawn.jpg"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  var DEFAULTS = {};
+  var inputs = Array.prototype.slice.call(document.querySelectorAll('.setup input[data-key]'));
+  inputs.forEach(function(i){ DEFAULTS[i.dataset.key] = i.value; });
+
+  function load(){
+    try{ var s = JSON.parse(localStorage.getItem('dg-kit-fields')||'{}'); inputs.forEach(function(i){ if(s[i.dataset.key]!=null) i.value = s[i.dataset.key]; }); }catch(e){}
+  }
+  function save(){
+    try{ var o={}; inputs.forEach(function(i){ o[i.dataset.key]=i.value; }); localStorage.setItem('dg-kit-fields', JSON.stringify(o)); }catch(e){}
+  }
+  function val(k){ var i = inputs.filter(function(x){return x.dataset.key===k;})[0]; return i ? i.value.trim() : ''; }
+
+  function refUrl(){
+    var hub = val('hub') || 'https://dogguard.com';
+    var code = val('code');
+    if(!code) return hub;
+    return hub + (hub.indexOf('?')>-1 ? '&' : '?') + 'ref=' + encodeURIComponent(code);
+  }
+
+  var qrCache = {};
+  function renderQR(){
+    var targets = document.querySelectorAll('[data-qr]');
+    Array.prototype.forEach.call(targets, function(el){
+      var text = el.dataset.qr === 'ref' ? refUrl() : (val('hub') || 'https://dogguard.com');
+      var size = parseInt(el.dataset.size,10) || 96;
+      if(el.dataset.last === text) return;
+      el.dataset.last = text;
+      el.innerHTML = '';
+      if(window.QRCode){
+        new QRCode(el, {text:text, width:size, height:size, colorDark:'#002F6C', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.M});
+      } else {
+        el.textContent = 'QR';
+      }
+    });
+  }
+
+  function bind(){
+    var els = document.querySelectorAll('[data-bind]');
+    Array.prototype.forEach.call(els, function(el){
+      var v = val(el.dataset.bind);
+      el.textContent = v || '________';
+    });
+    renderQR();
+  }
+
+  inputs.forEach(function(i){ i.addEventListener('input', function(){ bind(); save(); }); });
+  document.getElementById('reset').addEventListener('click', function(){
+    inputs.forEach(function(i){ i.value = DEFAULTS[i.dataset.key]; });
+    bind(); save();
+  });
+
+  // Tracker rows
+  var tb = document.getElementById('tracker-rows');
+  for(var r=0;r<16;r++){
+    var tr = document.createElement('tr');
+    for(var c=0;c<11;c++){ var td=document.createElement('td'); if(c===3) td.className='code'; tr.appendChild(td); }
+    tb.appendChild(tr);
+  }
+
+  // Tabs
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
+  function showTab(name){
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.tab===name)); });
+    panels.forEach(function(p){ p.hidden = p.dataset.panel!==name; });
+    try{ localStorage.setItem('dg-kit-tab', name); }catch(e){}
+    fit();
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ showTab(t.dataset.tab); }); });
+
+  // Scale sheets to fit their stage
+  function fit(){
+    var stages = document.querySelectorAll('.stage');
+    Array.prototype.forEach.call(stages, function(st){
+      var w = parseInt(st.dataset.w,10), h = parseInt(st.dataset.h,10);
+      var avail = st.clientWidth || w;
+      var s = Math.min(1, avail / w);
+      var sheet = st.querySelector('.sheet');
+      sheet.style.transform = 'scale(' + s + ')';
+      st.style.height = (h * s) + 'px';
+    });
+  }
+  window.addEventListener('resize', fit);
+  if(window.ResizeObserver){ var ro = new ResizeObserver(fit); Array.prototype.forEach.call(document.querySelectorAll('.stage'), function(s){ ro.observe(s); }); }
+
+  // Print one piece
+  var pageStyle = document.createElement('style');
+  document.head ? document.head.appendChild(pageStyle) : document.body.appendChild(pageStyle);
+  Array.prototype.forEach.call(document.querySelectorAll('button[data-print]'), function(b){
+    b.addEventListener('click', function(){
+      var id = b.dataset.print;
+      var piece = document.querySelector('.piece[data-print-id="'+id+'"]');
+      Array.prototype.forEach.call(document.querySelectorAll('.piece.printing'), function(p){ p.classList.remove('printing'); });
+      piece.classList.add('printing');
+      pageStyle.textContent = '@page{size:' + (piece.dataset.page||'letter') + ';margin:0}';
+      document.body.setAttribute('data-print', id);
+      Array.prototype.forEach.call(piece.querySelectorAll('.sheet'), function(s){ s.style.transform='none'; });
+      window.print();
+      setTimeout(function(){ piece.classList.remove('printing'); document.body.removeAttribute('data-print'); fit(); }, 500);
+    });
+  });
+  window.addEventListener('afterprint', function(){ Array.prototype.forEach.call(document.querySelectorAll('.piece.printing'), function(p){ p.classList.remove('printing'); }); document.body.removeAttribute('data-print'); fit(); });
+
+  Array.prototype.forEach.call(document.querySelectorAll('img[data-photo]'), function(im){ var u=(window.DG_PHOTOS||{})[im.dataset.photo]; if(u) im.src=u; });
+  load(); bind();
+  var t='core'; try{ t = localStorage.getItem('dg-kit-tab') || 'core'; }catch(e){}
+  showTab(t);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fit); }
+  setTimeout(fit, 300);
+})();
+</script>
+
+</body>
+</html>
